@@ -1,0 +1,24 @@
+# fly.toml — Fly.io deployment config for the Novyra frontend.
+#
+# Setup (run once from frontend/):
+#   fly launch --no-deploy
+#   fly deploy --build-arg VITE_API_BASE=https://smart-farm-backend.fly.dev
+
+app = "novyra-frontend"           # change to a globally-unique name
+primary_region = "iad"
+
+[build]
+  [build.args]
+    VITE_API_BASE = "https://smart-farm-backend.fly.dev"  # point at your backend
+
+[http_service]
+  internal_port = 4173
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+
+[[vm]]
+  cpu_kind = "shared"
+  cpus = 1
+  memory_mb = 256
